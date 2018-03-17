@@ -1,0 +1,75 @@
+{
+  "hostname": "backup-pi",
+  "model": "Raspberry Pi 2 Model B Rev 1.1",
+  "operatingsystem": "Raspbian GNU/Linux 9 (stretch)",
+  "uptime": 0,
+  "load": 1.2,
+  "processes": 140,
+  "temperature": 60.53,
+  "cpu": {
+    "cores": 4,
+    "speed": 1000
+  },
+  "memory": {
+    "total": 968,
+    "used": 360,
+    "free": 607,
+    "percent": 37.27
+  },
+  "disks": {
+    "/": {
+      "free": 1202380,
+      "size": 13860272,
+      "used": 12657892,
+      "percent": 0.9132498987032867
+    },
+    "/dev": {
+      "free": 468152,
+      "size": 468152,
+      "used": 0,
+      "percent": 0
+    },
+    "/dev/shm": {
+      "free": 472760,
+      "size": 472760,
+      "used": 0,
+      "percent": 0
+    },
+    "/run": {
+      "free": 466388,
+      "size": 472760,
+      "used": 6372,
+      "percent": 0.0134782976563161
+    },
+    "/run/lock": {
+      "free": 5116,
+      "size": 5120,
+      "used": 4,
+      "percent": 0.00078125
+    },
+    "/sys/fs/cgroup": {
+      "free": 472760,
+      "size": 472760,
+      "used": 0,
+      "percent": 0
+    },
+    "/boot": {
+      "free": 45988,
+      "size": 67434,
+      "used": 21446,
+      "percent": 0.3180294806774031
+    },
+    "/mnt/backups": {
+      "free": 1138602812,
+      "size": 5814215760,
+      "used": 4675612948,
+      "percent": 0.8041691504066234
+    },
+    "/run/user/1000": {
+      "free": 94552,
+      "size": 94552,
+      "used": 0,
+      "percent": 0
+    }
+  }
+}
