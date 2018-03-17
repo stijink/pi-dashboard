@@ -1,0 +1,11 @@
+version: '3'
+services:
+  app:
+    build: .
+    image: stijink/pi-dashboard
+    working_dir: /app
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/app
+    command: yarn run dev

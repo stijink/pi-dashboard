@@ -16,5 +16,5 @@
         "/sys/fs/cgroup",
         "/run/user/1000"
     ],
-    "debugEnabled": true
+    "debugEnabled": false
 }
