@@ -95,7 +95,7 @@
             </tr>
             <tr v-for="(disk) in disks" :key="disk.name">
               <td class="pr-5">
-                <v-icon small class="mr-2">sd_card</v-icon>{{ disk.name }}
+                <v-icon small class="mr-2">{{ chooseDiskIcon(disk) }}</v-icon>{{ disk.name }}
               </td>
               <td class="pr-3">
                 {{ formatDiskSize(disk.size) }}
@@ -155,6 +155,14 @@
         }
 
         return Math.round((size / 1024), 2) + ' MB'
+      },
+
+      chooseDiskIcon (disk) {
+        if (disk.name.includes('/mnt')) {
+          return 'storage'
+        }
+
+        return 'sd_storage'
       }
     }
   }
