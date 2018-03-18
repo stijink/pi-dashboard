@@ -1,9 +1,5 @@
 {
     "update_interval": 5000,
-    "hosts": [
-        "homescreen",
-        "backup-pi"
-    ],
     "server": {
         "protocol": "http",
         "port": 9630
