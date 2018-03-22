@@ -41,7 +41,9 @@ export const store = new Vuex.Store({
     },
 
     setHostnames (state, hostnames) {
-      state.hostnames = hostnames
+      if (hostnames !== null) {
+        state.hostnames = hostnames
+      }
     },
 
     resetRaspberries (state) {
@@ -80,14 +82,7 @@ export const store = new Vuex.Store({
     },
 
     loadRapsberries ({getters, commit, dispatch}) {
-      // If the number of raspberries match the number of hosts
-      // we do not need to do anything since everything is already loaded
-      if (getters.hostnames.length === getters.raspberries.length) {
-        return
-      }
-
       dispatch('startLoading')
-      commit('resetRaspberries')
 
       getters.hostnames.forEach((hostname, index) => {
         if (getters.config.use_fixtures === true) {
@@ -97,8 +92,12 @@ export const store = new Vuex.Store({
             index: index
           })
         } else {
+          const url = getters.config.server.protocol +
+            '://' + hostname + ':' +
+            getters.config.server.port
+
           // Otherwise perform a real http call
-          axios.get(hostname).then((response) => {
+          axios.get(url).then((response) => {
             commit('addRaspberry', {
               raspberry: response.data,
               index: index
@@ -112,6 +111,7 @@ export const store = new Vuex.Store({
 
     removeHostname ({getters, commit, dispatch}, hostname) {
       commit('removeHostname', hostname)
+      commit('resetRaspberries')
       dispatch('loadRapsberries')
     },
 

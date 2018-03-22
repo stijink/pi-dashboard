@@ -42,7 +42,7 @@
 
         <div class="ma-1">
           <v-icon small class="mr-1">equalizer</v-icon>
-          {{ raspberry.load }} System load
+          {{ raspberry.load.toFixed(2) }} System load
         </div>
 
         <div class="ma-1">
