@@ -19,17 +19,12 @@
       >
       </v-progress-circular>
 
-      <add-raspberry v-if="numberOfHosts > 0"></add-raspberry>
-
-      <div v-if="config.debugEnabled" v-resize="onResize" class="ml-3">
-        <span><strong>Size:</strong> {{ debug.size }} </span>
-      </div>
-
+      <add-raspberry v-if="numberOfHostnames > 0"></add-raspberry>
     </v-toolbar>
 
     <!-- List Raspberry Pis -->
     <v-container
-      v-if="isLoaded && numberOfHosts > 0"
+      v-if="raspberries.length > 0"
       class="raspberry__list pa-0 mt-3"
       fluid grid-list-xl>
         <v-layout row wrap justify-space-around>
@@ -45,7 +40,7 @@
     </v-container>
 
     <!-- Fallback if no Raspberries are configured -->
-    <v-container v-if="numberOfHosts == 0" fluid fill-height>
+    <v-container v-if="numberOfHostnames == 0" fluid fill-height>
       <v-layout flex align-center justify-center>
         <v-flex xs4 class="text-xs-center">
           <p class="headline mb-5">
@@ -61,83 +56,44 @@
 </template>
 
 <script>
-  // import axios from 'axios'
-  const raspberryFixture = require('./../config/fixture.json')
-
   export default {
-    data () {
-      return {
-        config: require('./../config/config.json'),
-        hostnames: [],
-        raspberries: [],
-        isLoaded: false,
-        isLoading: false,
-        debug: {
-          size: 0
-        }
-      }
-    },
 
     computed: {
-      isBreakPointNotXS () {
-        return !this.$vuetify.breakpoint.xs
+      isLoading () {
+        return this.$store.getters.isLoading
       },
 
-      numberOfHosts () {
-        return this.hostnames.length
+      numberOfHostnames () {
+        return this.$store.getters.hostnames.length
+      },
+
+      updateInterval () {
+        return this.$store.getters.config.update_interval
+      },
+
+      raspberries () {
+        return this.$store.getters.raspberries
+      },
+
+      isBreakPointNotXS () {
+        return !this.$vuetify.breakpoint.xs
       }
     },
 
     methods: {
-      getHostnames () {
-        const hostnames = localStorage.getItem('hostnames') || []
-        this.hostnames = JSON.parse(hostnames)
-      },
-
-      loadAll () {
-        this.isLoading = true
-
-        this.hostnames.forEach((hostname, index) => {
-          this.raspberries[index] = this.loadOne(hostname)
-        })
-
-        if (this.raspberries.length > 0) {
-          this.isLoaded = true
-
-          setTimeout(() => {
-            this.isLoading = false
-          }, 700)
-        }
-      },
-
-      loadOne (hostname) {
-        const fixture = raspberryFixture
-        fixture.hostname = hostname
-        return fixture
-
-        /*
-          axios.get(hostname).then((response) => {
-            return response.data
-          })
-        */
-      },
-
-      onResize () {
-        this.debug.size = this.$vuetify.breakpoint.name
+      loadRaspberries () {
+        this.$store.dispatch('loadRapsberries')
       },
 
       setupUpdateInterval () {
         // Make sure the data is updated every x seconds
-        setInterval(this.loadAll, this.config.update_interval)
+        setInterval(this.loadRaspberries, this.updateInterval)
       }
     },
 
     mounted () {
-      this.getHostnames()
-      this.onResize()
-
-      if (this.numberOfHosts > 0) {
-        this.loadAll()
+      if (this.numberOfHostnames > 0) {
+        this.loadRaspberries()
         this.setupUpdateInterval()
       }
     }

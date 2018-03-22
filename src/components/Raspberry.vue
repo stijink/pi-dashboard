@@ -2,6 +2,11 @@
 
 <v-card class="mt-3 mb-4 pl-3 elevation-3">
 
+<v-btn color="gey-blue darken-3" dark small absolute top right fab
+  @click.native="removeHost(raspberry.hostname)">
+  <v-icon>remove</v-icon>
+</v-btn>
+
   <!-- Icon and Base informations -->
   <v-container fluid grid-list-lg class="mb-3">
     <v-layout row>
@@ -121,13 +126,11 @@
   export default {
     props: ['raspberry'],
 
-    data () {
-      return {
-        config: require('./../../config/config.json')
-      }
-    },
-
     computed: {
+      excludedDisks () {
+        return this.$store.getters.config.excluded_disks
+      },
+
       disks () {
         const disks = []
 
@@ -146,7 +149,7 @@
 
     methods: {
       isRelevantDisk (name) {
-        return !this.config.excluded_disks.includes(name)
+        return !this.excludedDisks.includes(name)
       },
 
       formatDiskSize (size) {
@@ -163,6 +166,10 @@
         }
 
         return 'sd_storage'
+      },
+
+      removeHost (hostname) {
+        this.$store.dispatch('removeHostname', hostname)
       }
     }
   }

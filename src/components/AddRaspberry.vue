@@ -7,13 +7,6 @@
       <v-card>
         <v-card-title class="headline">Add a new Raspberry Pi</v-card-title>
         <v-card-text>
-          <p><strong>Note:</strong></p>
-          <p>The server component
-            <a class="github" href="https://github.com/stijink/raspberry-status-server" target="_blank">
-            https://github.com/stijink/raspberry-status-server
-            </a>
-            should be up and running on the device you want to add.
-          </p>
 
         <v-text-field
           v-model="hostname"
@@ -21,7 +14,16 @@
           label="Enter hostname"
           prepend-icon="developer_board"
           single-line
+          class="mb-5"
         ></v-text-field>
+
+          <p><strong>Note:</strong></p>
+          <p>The server component
+            <a class="github" href="https://github.com/stijink/raspberry-status-server" target="_blank">
+            https://github.com/stijink/raspberry-status-server
+            </a>
+            should be up and running on the device you want to add.
+          </p>
 
         </v-card-text>
         <v-card-actions>
@@ -56,15 +58,10 @@
       },
 
       addDevice () {
-        let hostnames = localStorage.getItem('hostnames') || []
-
-        if (hostnames.length > 0) {
-          hostnames = JSON.parse(hostnames)
-        }
-
-        hostnames.push(this.hostname)
-        localStorage.setItem('hostnames', JSON.stringify(hostnames))
-        this.dialog = false
+        this.$store.dispatch('addHostname', this.hostname).then(() => {
+          this.hostname = null
+          this.dialog = false
+        })
       }
     }
   }

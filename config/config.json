@@ -1,5 +1,6 @@
 {
     "update_interval": 5000,
+    "use_fixtures": true,
     "server": {
         "protocol": "http",
         "port": 9630
@@ -11,6 +12,5 @@
         "/run/lock",
         "/sys/fs/cgroup",
         "/run/user/1000"
-    ],
-    "debugEnabled": false
+    ]
 }
