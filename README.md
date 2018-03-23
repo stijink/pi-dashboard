@@ -1,21 +1,32 @@
 # pi-dashboard
 
-> A Vue.js project
+A dashboard to display status information about the raspberries running in your household.
 
-## Build Setup
+![Screenshot of the Raspberry Pi Dashboard](screenshot.png)
+
+
+## Requirements
+
+* Docker - For running the dashboard
+* [stijink/raspberry-status-server](https://github.com/stijink/raspberry-status-server) needs to be running on each raspberry you want to monitor
+
+
+## Setup
+
+The easiest way to run the dashboard is by using docker. 
+
 
 ``` bash
-# install dependencies
-npm install
+# Build the dashboard container
+bin/build.sh
 
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
+# Start the dashboard container
+bin/start.sh
 ```
 
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+After you built and started the dashboard docker container you can access the tool at `http://{your-hostname}:8080`.
+
+
+## License
+
+This project is licensed under the MIT license.
