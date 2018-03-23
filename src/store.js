@@ -103,6 +103,15 @@ export const store = new Vuex.Store({
               index: index
             })
           })
+          .catch(() => {
+            commit('addRaspberry', {
+              raspberry: {
+                hostname: hostname,
+                is_online: false
+              },
+              index: index
+            })
+          })
         }
       })
 

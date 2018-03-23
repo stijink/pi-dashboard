@@ -33,7 +33,13 @@
             :class="{ 'raspberry-fixed-size' : isBreakPointNotXS }"
             v-for="(raspberry, index) in raspberries" :key="index">
 
-            <raspberry :raspberry="raspberry"></raspberry>
+                <!-- Device is offline -->
+                <raspberry-offline v-if="raspberry.is_online === false" :raspberry="raspberry">
+                </raspberry-offline>
+
+                <!-- Device is online -->
+                <raspberry-online v-else :raspberry="raspberry">
+                </raspberry-online>
 
           </v-flex>
         </v-layout>
@@ -94,7 +100,7 @@
     mounted () {
       if (this.numberOfHostnames > 0) {
         this.loadRaspberries()
-        this.setupUpdateInterval()
+        // this.setupUpdateInterval()
       }
     }
   }

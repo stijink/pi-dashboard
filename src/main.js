@@ -2,14 +2,19 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.css'
+
 import App from './App'
-import Raspberry from './components/Raspberry'
+import OnlineRaspberry from './components/OnlineRaspberry'
+import OfflineRaspberry from './components/OfflineRaspberry'
 import AddRaspberry from './components/AddRaspberry'
+import RemoveRaspberry from './components/RemoveRaspberry'
 
 import { store } from './store'
 
-Vue.component('raspberry', Raspberry)
+Vue.component('raspberry-online', OnlineRaspberry)
+Vue.component('raspberry-offline', OfflineRaspberry)
 Vue.component('add-raspberry', AddRaspberry)
+Vue.component('remove-raspberry', RemoveRaspberry)
 
 Vue.use(Vuex)
 Vue.use(Vuetify)
