@@ -86,36 +86,44 @@ export const store = new Vuex.Store({
 
       getters.hostnames.forEach((hostname, index) => {
         if (getters.config.use_fixtures === true) {
-          // Use Fake-Data if Fixtures are enabled
-          commit('addRaspberry', {
-            raspberry: require('./../config/fixture.json'),
-            index: index
-          })
+          dispatch('_loadRaspberryFixture', { hostname: hostname, index: index })
         } else {
-          const url = getters.config.server.protocol +
-            '://' + hostname + ':' +
-            getters.config.server.port
-
-          // Otherwise perform a real http call
-          axios.get(url).then((response) => {
-            commit('addRaspberry', {
-              raspberry: response.data,
-              index: index
-            })
-          })
-          .catch(() => {
-            commit('addRaspberry', {
-              raspberry: {
-                hostname: hostname,
-                is_online: false
-              },
-              index: index
-            })
-          })
+          dispatch('_loadRaspberryHttp', { hostname: hostname, index: index })
         }
       })
 
       dispatch('stopLoading')
+    },
+
+    // Only called internally by loadRapsberries
+    _loadRaspberryFixture ({commit}, payload) {
+      commit('addRaspberry', {
+        raspberry: require('./../config/fixture.json'),
+        index: payload.index
+      })
+    },
+
+    // Only called internally by loadRapsberries
+    _loadRaspberryHttp ({getters, commit}, payload) {
+      const url = getters.config.server.protocol +
+      '://' + payload.hostname + ':' +
+      getters.config.server.port
+
+      axios.get(url).then((response) => {
+        commit('addRaspberry', {
+          raspberry: response.data,
+          index: payload.index
+        })
+      })
+      .catch(() => {
+        commit('addRaspberry', {
+          raspberry: {
+            hostname: payload.hostname,
+            is_online: false
+          },
+          index: payload.index
+        })
+      })
     },
 
     removeHostname ({getters, commit, dispatch}, hostname) {
