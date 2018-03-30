@@ -100,7 +100,7 @@
     mounted () {
       if (this.numberOfHostnames > 0) {
         this.loadRaspberries()
-        // this.setupUpdateInterval()
+        this.setupUpdateInterval()
       }
     }
   }
