@@ -12,6 +12,7 @@
         "/run/lock",
         "/sys/fs/cgroup",
         "/run/user/1000",
-        "/media/pi/SETTINGS1"
+        "/media/pi/SETTINGS",
+        "/var/lib/docker"
     ]
 }
